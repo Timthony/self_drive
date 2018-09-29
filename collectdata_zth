@@ -1,0 +1,50 @@
+import io
+import os
+import threading
+import time 
+import picamera
+
+
+class SplitFrames(object):
+    def __init__(self):
+        self.frame_num = 0
+        self.output = 0
+# 处理图像的函数write，实时保存每一张照片
+# 对视频拍摄的每一帧进行处理，构造一个自定义输出类，每拍摄一帧都会进来write处理
+    def write(self, buf):
+        global key
+        if buf.startswith(b'\xff\xd8'):          # 代表一个JPG图片的开始，新照片的开头
+            if self.output:
+                self.output.close()
+            self.frame_num += 1
+            self.output = io.open('%s_image%s.jpg' % (key, time()), 'wb')  # 打开
+        self.output.write(buf)
+
+
+
+while True:
+
+
+# 多线程处理照片
+
+#with picamera.Picamera(resolution=('160, 120')) as camera:
+    #pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

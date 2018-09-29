@@ -1,8 +1,10 @@
+# 收集数据，赛道照片和对应的前、后、左、右、停
+# 对应图片和相应的标签值
 import io
 import car_control
 import os
 os.environ['SDL_VIDEODRIVE'] = 'x11'
-import pygame
+import pygame     # 检测模块
 from time import ctime,sleep,time
 import threading
 import numpy as np
@@ -16,19 +18,20 @@ class SplitFrames(object):
     def __init__(self):
         self.frame_num = 0
         self.output = None
-
+# 处理图像的函数write
+# 对视频拍摄的每一帧进行处理，构造一个自定义输出类，每拍摄一帧都会进来write处理
     def write(self, buf):
         global key
-        if buf.startswith(b'\xff\xd8'):
+        if buf.startswith(b'\xff\xd8'):                            # 代表一个JPG图片的开始，新照片的开头
             # Start of new frame; close the old one (if any) and
             # open a new output
             if self.output:
                 self.output.close()
             self.frame_num += 1
-            self.output = io.open('%s_image%s.jpg' % (key,time()), 'wb')
+            self.output = io.open('%s_image%s.jpg' % (key,time()), 'wb')           # 改变格式为jpg
         self.output.write(buf)
     
-
+ 
 def pi_capture():
     global train_img, is_capture_running,train_labels,key
     
@@ -58,20 +61,21 @@ def my_car_control():
     global is_capture_running, key
     key = 4
     pygame.init()
-    pygame.display.set_mode((1,1))
+    pygame.display.set_mode((1,1))            # 窗口
     car_control.car_stop()
     sleep(0.1)
     print("Start control!")
  
     while is_capture_running:
         # get input from human driver
+        # 
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                key_input = pygame.key.get_pressed()
+            if event.type == pygame.KEYDOWN:  # 判断事件是不是按键按下的事件
+                key_input = pygame.key.get_pressed()     # 可以同时检测多个按键
                 print(key_input[pygame.K_w], key_input[pygame.K_a], key_input[pygame.K_d])
                 if key_input[pygame.K_w] and not key_input[pygame.K_a] and not key_input[pygame.K_d]:
                     print("Forward")
-                    key = 2
+                    key = 2 
                     car_control.car_move_forward()
                 elif key_input[pygame.K_a]:
                     print("Left")
@@ -111,7 +115,7 @@ if __name__ == '__main__':
 
     print("capture thread")
     print ('-' * 50)
-    capture_thread = threading.Thread(target=pi_capture,args=())
+    capture_thread = threading.Thread(target=pi_capture,args=())   # 开启线程
     capture_thread.setDaemon(True)
     capture_thread.start()
     

@@ -66,7 +66,7 @@ class ImageProcessor(threading.Thread):
 					image_np = np.array(image)
 					camera_data_array = np.expand_dims(image_np,axis = 0)
 					current_time = time.time()
-					if current_time>latest_time:
+					if current_time > latest_time: 
 						if current_time-latest_time>1:
 							print("*" * 30)
 							print(current_time-latest_time)
