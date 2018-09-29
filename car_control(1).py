@@ -69,7 +69,7 @@ def carbackRight():
 	GPIO.output(backMotorinput1,GPIO.LOW)
 	GPIO.output(backMotorinput2,GPIO.HIGH)
 	backMotorPwm.ChangeDutyCycle(speed2)
-# 清除记忆
+# 清除
 def cleanGPIO():
 	GPIO.cleanup()
 	backMotorPwm.stop()                          # 停止输出PWM
