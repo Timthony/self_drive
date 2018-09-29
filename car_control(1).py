@@ -1,9 +1,11 @@
 import RPi.GPIO as GPIO
 import time
 
-
-speed1 = 60
-speed2 = 33
+# 设定速度，满电时速度太快，图像处理速度跟不上
+# 直行快一点，转向慢一点
+speed1 = 60          # 直行速度
+speed2 = 33          # 拐弯速度
+# 轮子定义
 backMotorinput1 = 7   #后轮1
 backMotorinput2 = 11   #后轮2
 
