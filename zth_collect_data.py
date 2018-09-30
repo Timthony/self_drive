@@ -1,7 +1,7 @@
 # 收集数据，赛道照片和对应的前、后、左、右、停
 # 对应图片和相应的标签值
 import io
-import car_control
+import zth_car_control
 import os
 os.environ['SDL_VIDEODRIVE'] = 'x11'
 import pygame     # 检测模块
@@ -62,7 +62,7 @@ def my_car_control():
     key = 4
     pygame.init()
     pygame.display.set_mode((1,1))            # 窗口
-    car_control.car_stop()
+    zth_car_control.car_stop()
     sleep(0.1)
     print("Start control!")
  
@@ -70,45 +70,54 @@ def my_car_control():
         # get input from human driver
         # 
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:  # 判断事件是不是按键按下的事件
+            # 判断事件是不是按键按下的事件
+            if event.type == pygame.KEYDOWN:  
                 key_input = pygame.key.get_pressed()     # 可以同时检测多个按键
                 print(key_input[pygame.K_w], key_input[pygame.K_a], key_input[pygame.K_d])
+                # 按下前进，保存图片以2开头
                 if key_input[pygame.K_w] and not key_input[pygame.K_a] and not key_input[pygame.K_d]:
                     print("Forward")
                     key = 2 
-                    car_control.car_move_forward()
+                    zth_car_control.car_move_forward()
+                # 按下左键，保存图片以0开头
                 elif key_input[pygame.K_a]:
                     print("Left")
-                    car_control.car_turn_left()
+                    zth_car_control.car_turn_left()
                     sleep(0.1)
                     key = 0
+                # 按下d右键，保存图片以1开头
                 elif key_input[pygame.K_d]:
                     print("Right")
-                    car_control.car_turn_right()
+                    zth_car_control.car_turn_right()
                     sleep(0.1)
                     key = 1
+                # 按下s后退键，保存图片为3开头
                 elif key_input[pygame.K_s]:
                     print("Backward")
-                    car_control.car_move_backward()
+                    zth_car_control.car_move_backward()
                     key = 3
+                # 按下k停止键，停止
                 elif key_input[pygame.K_k]:
-                    car_control.car_stop()
+                    zth_car_control.car_stop()
+            # 检测按键是不是抬起
             elif event.type == pygame.KEYUP:
                 key_input = pygame.key.get_pressed()
+                # w键抬起，轮子回正
                 if key_input[pygame.K_w] and not key_input[pygame.K_a] and not key_input[pygame.K_d]:
                     print("Forward")
                     key = 2
-                    car_control.car_turn_straight()
-                    car_control.car_move_forward()
+                    zth_car_control.car_turn_straight()
+                    zth_car_control.car_move_forward()
+                # s键抬起
                 elif key_input[pygame.K_s] and not key_input[pygame.K_a] and not key_input[pygame.K_d]:
                     print("Backward")
                     key = 3
-                    car_control.car_move_backward()
+                    zth_car_control.car_move_backward()
                 else:
                     print("Stop")
-                    car_control.car_stop()
+                    zth_car_control.car_stop()
                 #car_control.cleanGPIO()
-    car_control.cleanGPIO()
+    zth_car_control.clean_GPIO()
 
 if __name__ == '__main__':
     global train_labels, train_img, key
@@ -125,5 +134,5 @@ if __name__ == '__main__':
         pass
 
     print("Done!")
-    car_control.car_stop()
-    car_control.clean_GPIO()
+    zth_car_control.car_stop()
+    zth_car_control.clean_GPIO()
