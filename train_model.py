@@ -1,4 +1,4 @@
-import pandas as pd # data analysis toolkit - create, read, update, delete datasets
+#import pandas as pd # data analysis toolkit - create, read, update, delete datasets
 import numpy as np #matrix math
 from sklearn.model_selection import train_test_split #to split out training and testing data 
 #keras is a high level wrapper on top of tensorflow (machine learning library)
@@ -26,7 +26,7 @@ np.random.seed(0)
 
 IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 120, 160, 3
 INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
-
+(
 def load_data():
     """
     Load training data and split it into training and validation set
