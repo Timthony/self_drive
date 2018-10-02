@@ -138,6 +138,12 @@ def main():
         with picamera.Picamera(resolution=(160, 120)) as camera:
             time.sleep(2)
             output = ProcessOutput()
+            camera.start_recording(output, format='mjpeg')
+            while not output.done:
+                camera.wait_recording(1)
+            camera.stop_recording()
+    finally:
+        zth_car_control.clean_GPIO()
 
 
 
