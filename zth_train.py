@@ -29,7 +29,7 @@ def load_data():
     # load
     image_array = np.zeros((1, 120, 160, 3))               # 初始化
     label_array = np.zeros((1, 5), 'float')
-    training_data = glob.glob('/Volumes/Seagate Expansion Drive/tianhangz/project/selfdrive/training_data_npz/*.npz')
+    training_data = glob.glob('/media/nkdx/Seagate Expansion Drive/tianhangz/project/selfdrive/training_data_npz/*.npz')
     # 匹配所有的符合条件的文件，并将其以list的形式返回。
     print("匹配完成。开始读入")
     print("一共%d轮", len(training_data))
@@ -66,7 +66,7 @@ def load_data():
 # step2 建立模型
 def build_model(keep_prob):
     print("开始编译模型")
-    model = Sequential
+    model = Sequential()
     model.add(Lambda(lambda x: (x/102.83 - 1), input_shape = INPUT_SHAPE))
     model.add(Conv2D(24, (5, 5), activation='elu', strides=(2, 2)))
     model.add(Conv2D(36, (5, 5), activation='elu', strides=(2, 2)))
@@ -106,7 +106,7 @@ def train_model(model, learning_rate, nb_epoch, samples_per_epoch,
                               write_images=True, embeddings_freq=0, embeddings_layer_names=None,
                               embeddings_metadata=None)
     # 编译神经网络模型，loss损失函数，optimizer优化器， metrics列表，包含评估模型在训练和测试时网络性能的指标
-    model.compile(loss='mean_squared_error', optimzier=Adam(lr=learning_rate), metrics=['accuracy'])
+    model.compile(loss='mean_squared_error', optimizer=Adam(lr=learning_rate), metrics=['accuracy'])
     # 训练神经网络模型，batch_size梯度下降时每个batch包含的样本数，epochs训练多少轮结束，
     # verbose是否显示日志信息，validation_data用来验证的数据集
     model.fit_generator(batch_generator(X_train, y_train, batch_size),
@@ -121,7 +121,7 @@ def train_model(model, learning_rate, nb_epoch, samples_per_epoch,
 # 可以一个batch一个batch进行训练，CPU和GPU同时开工
 def batch_generator(X, y, batch_size):
     images = np.empty([batch_size, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])
-    steers = np.empty(batch_size, 5)
+    steers = np.empty([batch_size, 5])
     while True:
         i = 0
         for index in np.random.permutation(X.shape[0]):

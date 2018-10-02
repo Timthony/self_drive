@@ -7,8 +7,8 @@ import io
 import glob
 import time
 import threading
-#import picamera.array
-#import picamera
+import picamera.array
+import picamera
 from PIL import Image
 import numpy as np
 
@@ -119,13 +119,6 @@ class ProcessOutput(object):
 
 
 
-
-
-
-
-
-
-
 def main():
     """获取数据，然后预测获得的数据，编辑数据，控制车行驶"""
     global model, graph
@@ -135,7 +128,7 @@ def main():
     graph = tf.get_default_graph()
 
     try:
-        with picamera.Picamera(resolution=(160, 120)) as camera:
+        with picamera.PiCamera(resolution=(160, 120)) as camera:
             time.sleep(2)
             output = ProcessOutput()
             camera.start_recording(output, format='mjpeg')
