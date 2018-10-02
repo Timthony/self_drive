@@ -26,7 +26,7 @@ np.random.seed(0)
 
 IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 120, 160, 3
 INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
-(
+
 def load_data():
     """
     Load training data and split it into training and validation set

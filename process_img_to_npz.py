@@ -63,10 +63,10 @@ if __name__ == '__main__':
 					print('prcess error')
 
 		# 去掉第0位的全零图像数组，全零图像数组是 train_imgs = np.zeros([1,120,160,3]) 初始化生成的
-		train_imgs = train_imgs[1:, :]
+		train_imgs = train_imgs[1:, :]               # 从第一位开始取，因为第0位是初始化的
 		train_labels = train_labels[1:, :]
-		file_name = str(int(time()))
-		directory = "training_data_npz"
+		file_name = str(int(time()))                 # 文件名直接取时间
+		directory = "training_data_npz"              # 文件夹
 
 		if not os.path.exists(directory):
 			os.makedirs(directory)

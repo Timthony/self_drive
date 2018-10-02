@@ -1,5 +1,5 @@
 # 将图片处理为npz格式
-
+# 自动驾驶模型真实道路模拟行驶
 import os
 import numpy as np
 import matplotlib.image as mpimg
@@ -7,19 +7,17 @@ from time import time
 import math
 from PIL import Image
 
-CHUNK_SIZE = 256
+CHUNK_SIZE = 128    # 将图片压缩，每256个做一次处理
 
 
 
-
+# 本段不一样
 def process_img(img_path, key):
 
     print(img_path, key)
     image = Image.open(img_path)
     image_array = np.array(image)
-    image_array = np.expand_dims(image_array, axis=0)
-
-
+    image_array = np.expand_dims(image_array, axis=0)  # 增加一个维度
 
 
     #image_array = mpimg.imread(img_path)
@@ -44,21 +42,22 @@ def process_img(img_path, key):
 
 if __name__ == '__main__':
     path = "training_data"
-    files = os.listdir(path)                           # 将该路径下的文件名都存入列表
-    turns = int(math.ceil(len(files) / CHUNK_SIZE))
+    files = os.listdir(path)                             # 将该路径下的文件名都存入列表
+    turns = int(math.ceil(len(files) / CHUNK_SIZE))      # 取整，把所有图片分为这么多轮，每CHUNK_SIZE张一轮
     print("number of files: {}".format(len(files)))
     print("turns: {}".format(turns))
 
     for turn in range(0, turns):
-        train_labels = np.zeros((1, 5), 'float')
-        train_imgs = np.zeros([1, 120, 160, 3])
+        train_labels = np.zeros((1, 5), 'float')           # 初始化标签数组
+        train_imgs = np.zeros([1, 120, 160, 3])            # 初始化图像数组
 
-        CHUNK_files = files[turn * CHUNK_SIZE: (turn + 1) * CHUNK_SIZE]
+        CHUNK_files = files[turn * CHUNK_SIZE: (turn + 1) * CHUNK_SIZE] # 取出当前这一轮图片
         print("number of CHUNK files: {}".format(len(CHUNK_files)))
         for file in CHUNK_files:
+            # 不是文件夹，并且是jpg文件
             if not os.path.isdir(file) and file[len(file) - 3:len(file)] == 'jpg':
                 try:
-                    key = int(file[0])
+                    key = int(file[0])                     # 取第一个字符为key
                     image_array, label_array = process_img(path + "/" + file, key)
                     train_imgs = np.vstack((train_imgs, image_array))
                     train_labels = np.vstack((train_labels, label_array))
