@@ -111,6 +111,7 @@ def train_model(model, learning_rate, nb_epoch, samples_per_epoch,
     # verbose是否显示日志信息，validation_data用来验证的数据集
     model.fit_generator(batch_generator(X_train, y_train, batch_size),
                         steps_per_epoch=samples_per_epoch/batch_size,
+                        epochs=nb_epoch,
                         max_queue_size=1,
                         validation_data=batch_generator(X_valid, y_valid, batch_size),
                         validation_steps=len(X_valid)/batch_size,
