@@ -68,7 +68,7 @@ if __name__ == '__main__':
         train_imgs = train_imgs[1:, :]
         train_labels = train_labels[1:, :]
         file_name = str(int(time()))
-        directory = "/Volumes/Seagate Expansion Drive/tianhangz/project/selfdrive/training_data_npz"
+        directory = "training_data_npz"
 
         if not os.path.exists(directory):
             os.makedirs(directory)

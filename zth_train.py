@@ -29,7 +29,7 @@ def load_data():
     # load
     image_array = np.zeros((1, 120, 160, 3))               # 初始化
     label_array = np.zeros((1, 5), 'float')
-    training_data = glob.glob('/media/nkdx/Seagate Expansion Drive/tianhangz/project/selfdrive/training_data_npz/*.npz')
+    training_data = glob.glob('training_data_npz/*.npz')
     # 匹配所有的符合条件的文件，并将其以list的形式返回。
     print("匹配完成。开始读入")
     print("一共%d轮", len(training_data))
@@ -71,19 +71,13 @@ def build_model(keep_prob):
     model.add(Conv2D(24, (5, 5), activation='elu', strides=(2, 2)))
     model.add(Conv2D(36, (5, 5), activation='elu', strides=(2, 2)))
     model.add(Conv2D(48, (5, 5), activation='elu', strides=(2, 2)))
-
-    #model.add(Dropout(0.5))
     model.add(Conv2D(64, (3, 3),activation='elu'))
-    #model.add(Dropout(0.3))
     model.add(Conv2D(64, (3, 3),activation='elu'))
     model.add(Dropout(keep_prob))  # Dropout将在训练过程中每次更新参数时随机断开一定百分比（p）的输入神经元连接
     model.add(Flatten())
-    model.add(Dense(500, activation='elu'))
-    #model.add(Dropout(0.1))
+    #model.add(Dense(500, activation='elu'))
     model.add(Dense(250, activation='elu'))
-    #model.add(Dropout(0.1))
-    model.add(Dense(50, activation='elu'))
-    #model.add(Dropout(0.1))
+    #model.add(Dense(50, activation='elu'))
     model.add(Dense(5))
     model.summary()
 
@@ -93,25 +87,26 @@ def build_model(keep_prob):
 def train_model(model, learning_rate, nb_epoch, samples_per_epoch,
                 batch_size, X_train, X_valid, y_train, y_valid):
     # 值保存最好的模型存下来
-    checkpoint = ModelCheckpoint('model-{epoch:03d}.h5', monitor='val_loss',
+    checkpoint = ModelCheckpoint('model-{epoch:03d}.h5',
+                                 monitor='val_loss',
                                  verbose=0,
                                  save_best_only=True,
                                  mode='min')
     # EarlyStopping patience：当earlystop被激活（如发现loss相比上一个epoch训练没有下降），
     # 则经过patience个epoch后停止训练。
     # mode：‘auto’，‘min’，‘max’之一，在min模式下，如果检测值停止下降则中止训练。在max模式下，当检测值不再上升则停止训练。
-    early_stop = EarlyStopping(monitor='val_loss', min_delta=.0005, patience=4,
+    early_stop = EarlyStopping(monitor='loss', min_delta=.0005, patience=10,
                                verbose=1, mode='min')
-    tensorboard = TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=20, write_graph=True,
+    tensorboard = TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=20, write_graph=True,write_grads=True,
                               write_images=True, embeddings_freq=0, embeddings_layer_names=None,
                               embeddings_metadata=None)
     # 编译神经网络模型，loss损失函数，optimizer优化器， metrics列表，包含评估模型在训练和测试时网络性能的指标
-    model.compile(loss='mean_squared_error', optimizer=Adam(lr=learning_rate), metrics=['accuracy'])
+    model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr=learning_rate), metrics=['accuracy'])
     # 训练神经网络模型，batch_size梯度下降时每个batch包含的样本数，epochs训练多少轮结束，
     # verbose是否显示日志信息，validation_data用来验证的数据集
     model.fit_generator(batch_generator(X_train, y_train, batch_size),
                         steps_per_epoch=samples_per_epoch/batch_size,
-                        epochs=nb_epoch,
+                        epochs = nb_epoch,
                         max_queue_size=1,
                         validation_data=batch_generator(X_valid, y_valid, batch_size),
                         validation_steps=len(X_valid)/batch_size,
@@ -153,7 +148,7 @@ def main():
     learning_rate = 0.0001
     nb_epoch = 100
     samples_per_epoch = 3000
-    batch_size = 40
+    batch_size = 30
 
     print('keep_prob = ', keep_prob)
     print('learning_rate = ', learning_rate)
