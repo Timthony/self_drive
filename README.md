@@ -10,3 +10,12 @@
 
 ![](https://ws3.sinaimg.cn/large/006tNbRwly1fw2xwxarf2j30u0140tbg.jpg)    
 
+
+
+#正在进行一些改进：    
+1.使用迁移学习进行fine-tuning是否可以提高精度    
+2.处理光照问题    
+3.处理数据类别不平衡的问题    
+欢迎交流讨论    
+
+
