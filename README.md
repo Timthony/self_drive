@@ -17,7 +17,7 @@ github传送门：https://github.com/Timthony/self_drive
 5. 在树莓派小车上使用zth_drive和训练好的模型，载入模型，即可实现在原先跑道的自动驾驶。（树莓派上执行）    
 注意：只需要使用上述提到的代码即可，别的都是一些初始版本或者正在增加的一些新模块。    
 ![](https://ws3.sinaimg.cn/large/006tNbRwly1fw2xwxarf2j30u0140tbg.jpg)    
-
+![](https://ws4.sinaimg.cn/large/006tNbRwly1fx7tmmq5jjj30u00hgq6z.jpg)    
 
 # 注意事项：
 1. 赛道需要自己制作，很重要，决定了数据质量。(我是在地板上，贴的有色胶带，然后贴成了跑道的形状)。
