@@ -1,6 +1,6 @@
 # self_drive
 基于树莓派的人工智能自动驾驶小车    
-
+github传送门：https://github.com/Timthony/self_drive
 # 整体流程
 电机控制    
 摄像头调试    
