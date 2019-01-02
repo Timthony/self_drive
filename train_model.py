@@ -93,18 +93,16 @@ def build_model(keep_prob):
     model.add(Conv2D(36, (5, 5), activation='elu', strides=(2, 2)))
     model.add(Conv2D(48, (5, 5), activation='elu', strides=(2, 2)))
 
-    #model.add(Dropout(0.5))
+
     model.add(Conv2D(64, (3, 3), activation='elu'))
-    #model.add(Dropout(0.3))
     model.add(Conv2D(64, (3, 3), activation='elu'))
     model.add(Dropout(keep_prob))
+    # 将卷积层输出的多维向量变成一维向量
     model.add(Flatten())
+
     model.add(Dense(500, activation='elu'))
-    #model.add(Dropout(0.1))
     model.add(Dense(250, activation='elu'))
-    #model.add(Dropout(0.1))
     model.add(Dense(50, activation='elu'))
-    #model.add(Dropout(0.1))
     model.add(Dense(5))
     model.summary()
 
