@@ -123,7 +123,7 @@ if __name__ == '__main__':
     global train_labels, train_img, key
 
     print("capture thread")
-    print ('-' * 50)
+    print('-' * 50)
     capture_thread = threading.Thread(target=pi_capture,args=())   # 开启线程
     capture_thread.setDaemon(True)
     capture_thread.start()

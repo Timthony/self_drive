@@ -46,6 +46,7 @@ def control_car(action_num):
 
 
 # 利用神经网络的模型预测图像
+# 继承父类threading.Thread
 class ImageProcessor(threading.Thread):
     def __init__(self, owner):
         super(ImageProcessor, self).__init__()
@@ -54,6 +55,7 @@ class ImageProcessor(threading.Thread):
         self.terminated = False
         self.owner = owner
         self.start()
+    # 要执行的代码写在run函数里面，线程创建后会直接运行run函数
     def run(self):
         global latest_time, model, graph
         while not self.terminated:
