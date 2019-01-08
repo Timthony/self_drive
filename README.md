@@ -53,3 +53,15 @@ github传送门：https://github.com/Timthony/self_drive
 欢迎交流讨论    
 
 
+使用的网络介绍：    
+基于英伟达提出的NVIDIA end-to-end Model    
+![](https://ws2.sinaimg.cn/large/006tNc79ly1fyyxtou4l7j30iu0pjwin.jpg)    
+简单介绍一下该模型的结构:    
+
+网络的第一层归一化层（Normalization Layer）采用了归一化操作，将图像每个维度都除以255并-0.5，将所有元素归一化到-0.5到0.5之间。这里不涉及学习过程，归一化作为输入卷积层之前的预处理操作，进行归一化操作有助于适配不同类型的网络结构，并且加速模型在GPU上的训练。    
+
+接下来的紧跟着五个卷积层（Convolutional Layer），卷积层的作用是特征提取以便后续的训练。前三个卷积层选择了5x5的kernel和2x2的strides，后两层卷积层选择了3x3的kernel并且没有strides，kernel是选择的卷积核，strides可以理解为卷积核在矩阵上的移动步长。关于卷积核和strides参数的选取NVIDIA没有做过多的解释，只是用“chosen empirically through a series of experiments that vary layer configurations”一句带过，这就是选择深度学习参数的玄妙之处了，实际应用中需要对几个典型的参数都尝试一遍并选择效果比较好的参数，但是可能无法给出合理的解释。     
+卷积核数量逐层增多是有一定的解释的，卷积神经网络的特点是“局部视野”+“权值共享”，通过选取图像中部分区域（通过卷积核的大小决定）并选择多个卷积核（权值共享）来将提取到的局部特征应用到全局图片，卷积核的数量和层数越多可以提取到的特征越“通用”，但是层数越多对于训练也是个挑战，在实际应用中需要针对不同的问题选择合适的网络结构。    
+卷积层之后，NVIDIA又增加了3个全连接层（full connected），fc层用来对卷积层提取到的特征进行训练并最终输出转向控制信号。    
+NVIDIA提出的结构是端到端（end-to-end）的，所谓端到端是指神经网络的输入为原始图片，神经网络的输出为直接控制的指令。端到端深度神经网络的特点在于，特征提取层和控制输出层的分界并不明显了，因为网络中的每一个部分对于系统来说都起着特征提取（feature extractor）和控制（controller）的作用。    
+
