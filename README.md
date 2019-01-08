@@ -53,7 +53,7 @@ github传送门：https://github.com/Timthony/self_drive
 欢迎交流讨论    
 
 
-使用的网络介绍：    
+# 使用的网络介绍：    
 基于英伟达提出的NVIDIA end-to-end Model    
 ![](https://ws2.sinaimg.cn/large/006tNc79ly1fyyxtou4l7j30iu0pjwin.jpg)    
 简单介绍一下该模型的结构:    
