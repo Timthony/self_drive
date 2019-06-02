@@ -78,7 +78,7 @@ def build_model(keep_prob):
     #model.add(Dense(500, activation='elu'))
     model.add(Dense(250, activation='elu'))
     #model.add(Dense(50, activation='elu'))
-    model.add(Dense(5, ACTIVATION='softmax'))
+    model.add(Dense(5, activation='softmax'))
     model.summary()
 
     return model
