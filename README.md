@@ -22,9 +22,7 @@ github传送门：https://github.com/Timthony/self_drive
 （Auto-driving on the original runway can be realized by using zth_drive and trained model in the raspberry dispatch car and loading the model. (raspberry pie execution)）    
 注意：只需要使用上述提到的代码即可，别的都是一些初始版本或者正在增加的一些新模块。 
 （Note: All you need to do is use the code mentioned above. Others are original versions or new modules that are being added.）    
-![](https://ws3.sinaimg.cn/large/006tNbRwly1fw2xwxarf2j30u0140tbg.jpg)    
-![](https://ws4.sinaimg.cn/large/006tNbRwly1fx7tmmq5jjj30u00hgq6z.jpg)    
-
+   
 # 注意事项（Matters needing attention）：    
 1. 赛道需要自己制作，很重要，决定了数据质量。(我是在地板上，贴的有色胶带，然后贴成了跑道的形状)。
 （the track needs to be produced by itself, which is very important and determines the quality of data. (I was on the floor, taped with colored tape, and then pasted into the shape of the runway).）    
